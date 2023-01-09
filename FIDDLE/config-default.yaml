@@ -12,7 +12,7 @@ batch_size: 100
 hierarchical_sep: ":"
 hierarchical_levels: [0, 1, 2]
 
-discretize: yes
+discretize: no
 use_ordinal_encoding: no
 discretization: ~
 
