@@ -595,13 +595,16 @@ def map_time_series_features(df_time_series, dtypes, args):
 
         # Split a mixed column into numeric and string columns
         for col in df.columns:
-            col_data = df[col]
-            col_is_numeric = [is_numeric(v) for v in col_data if not pd.isnull(v)]
-            if not all(col_is_numeric) and any(col_is_numeric): # have mixed type values
-                numeric_mask = col_data.apply(is_numeric)
-                df[col+'_str'] = df[col].copy()
-                df.loc[~numeric_mask, col] = np.nan
-                df.loc[numeric_mask, col+'_str'] = np.nan
+            try:
+                col_data = df[col]
+                col_is_numeric = [is_numeric(v) for v in col_data if not pd.isnull(v)]
+                if not all(col_is_numeric) and any(col_is_numeric): # have mixed type values
+                    numeric_mask = col_data.apply(is_numeric)
+                    df[col+'_str'] = df[col].copy()
+                    df.loc[~numeric_mask, col] = np.nan
+                    df.loc[numeric_mask, col+'_str'] = np.nan
+            except:
+                print(col)
 
         ts_mixed_cols = [df[col] for col in df.columns]
 
